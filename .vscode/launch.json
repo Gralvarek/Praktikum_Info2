@@ -5,14 +5,8 @@
             "name": "CodeLens (Launch) - Main",
             "request": "launch",
             "mainClass": "org.tudresden.info2.Main",
-            "projectName": "robotersimulation"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - App",
-            "request": "launch",
-            "mainClass": "org.tudresden.info2.App",
-            "projectName": "robotersimulation"
+            "projectName": "robotersimulation",
+            "console": "integratedTerminal"
         }
     ]
 }

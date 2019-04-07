@@ -1,6 +1,5 @@
 package org.tudresden.info2;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Spielfeld {
@@ -19,20 +18,24 @@ public class Spielfeld {
         try {
             System.out.println("How many Points of Interest?:");
             int i = s.nextInt();
-        
-            for(int x = 0; x < i; x++) {
+            poi = new Punkt[i];
+            int x, y;
+
+            for(int count = 0; count < i; count++) {
                 System.out.println("X: ");
-                poi[x].setX(s.nextInt());
+                x = s.nextInt();
                 System.out.println("Y: ");
-                poi[x].setY(s.nextInt()); 
+                y = s.nextInt();
+                poi[count] = new Punkt(x, y);
+                //System.out.println(poi[count].toString());
             }
+
             s.close();
             return poi;
 
-        } catch(InputMismatchException e) {
-            System.out.println("Not an Integer");
+        } catch(Exception e) {
             s.close();
-            throw new InputMismatchException();
+            throw e;
         }
     }
 
