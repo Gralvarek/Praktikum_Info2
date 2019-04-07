@@ -1,22 +1,26 @@
 package org.tudresden.info2;
 
+import java.awt.Color;
+
 public class Main {
     public static void main(String[] args) {
-        Punkt A = new Punkt();
-        Punkt B = new Punkt();
+        Rechteck A = new Rechteck();
+        Rechteck B = new Rechteck(new Punkt(3,4), 1, 5, "B", Color.WHITE);
 
-        A.setX(4);
-        A.setY(6);
+        A.setPosition(new Punkt(5,6));
+        A.setBreite(6);
+        A.setLaenge(7);
+        A.setBezeichnung("A");
+        A.setFarbe(Color.GREEN);
 
-        B.setX(10);
-        B.setY(3);
+        A.setFarbe(Color.WHITE);
+        System.out.println(A.toString());
+        System.out.println(B.toString());
 
-        A.aktuellePositionAusgeben();
-        B.aktuellePositionAusgeben();
+        A.bewegeUm(B.getPosition());
 
-        A.bewegeUm(3, 4);
-        A.aktuellePositionAusgeben();
+        System.out.println(A.toString());
 
-        System.out.println("Abstand: " + A.gibAbstand(B));
+
     }
 }

@@ -6,7 +6,12 @@ public class Punkt {
     private int y;
     
     public Punkt() {
-    
+
+    }
+
+    public Punkt(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
@@ -36,8 +41,8 @@ public class Punkt {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    public void aktuellePositionAusgeben() {
-        System.out.println(String.format("X Position: %d Y Position: %d", this.x, this.y));
+    public String toString() {
+        return String.format("(%d, %d)", this.x, this.y);
     }
 
 }
