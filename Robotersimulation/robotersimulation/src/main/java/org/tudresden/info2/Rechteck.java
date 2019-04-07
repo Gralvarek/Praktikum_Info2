@@ -80,6 +80,6 @@ public class Rechteck {
     }
 
     public String toString() {
-        return String.format("Position: %s\nBreite: %d Laenge: %d\nBezeichnung: %s\nFarbe: %s", this.position.toString(), this.breite, this.laenge, this.bezeichnung, this.farbe.toString());
+        return String.format("Position: %s\nBreite: %d Laenge: %d\nBezeichnung: %s\nFarbe: %s", this.position, this.breite, this.laenge, this.bezeichnung, this.farbe.toString());
     }
 }

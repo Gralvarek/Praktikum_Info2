@@ -18,20 +18,19 @@ public class Spielfeld {
         try {
             System.out.println("How many Points of Interest?:");
             int i = s.nextInt();
-            poi = new Punkt[i];
+            Punkt[] enteredPoi = new Punkt[i];
             int x, y;
 
-            for(int count = 0; count < i; count++) {
+            for(int index = 0; index < i; index++) {
                 System.out.println("X: ");
                 x = s.nextInt();
                 System.out.println("Y: ");
                 y = s.nextInt();
-                poi[count] = new Punkt(x, y);
-                //System.out.println(poi[count].toString());
+                enteredPoi[index] = new Punkt(x, y);
             }
 
             s.close();
-            return poi;
+            return enteredPoi;
 
         } catch(Exception e) {
             s.close();
@@ -41,10 +40,24 @@ public class Spielfeld {
 
     public void POI_sortieren() {
         poi = punkte_eingeben();
+        
+        Punkt nextPoint, oldPoint;
+        double sD = 0;
+        double pSD = Double.MAX_VALUE;
 
-        Punkt roboter = poi[0];
-
-        System.out.println("Abstand: " + roboter.gibAbstand(poi[1]));
+        for(int x = 0; x < poi.length; x++) {
+            for(int y = x + 1; y < poi.length; y++) {
+                sD = poi[x].gibAbstand(poi[y]);
+                if(sD < pSD) {
+                    oldPoint = poi[x + 1];
+                    nextPoint = poi[y];
+                    poi[y] = oldPoint;
+                    poi[x+1] = nextPoint;
+                    pSD = sD;
+                }
+            }
+            System.out.println(poi[x]);
+        }
     }
 
 }
