@@ -1,12 +1,20 @@
 package org.tudresden.info2;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Spielfeld {
 
     private static int breite = 1000;
     private static int laenge = 1000;
+
     private Punkt[] poi;
+    private ArrayList<Rechteck> hindernisse;
+
+    private static Random zufallsgenerator;
+
     public Spielfeld() {
 
     }
@@ -60,6 +68,55 @@ public class Spielfeld {
         for(Punkt a : this.poi) {
             System.out.println(a);
         }
+    }
+
+    public void hindernisliste_erzeugen() {
+        Scanner s = new Scanner(System.in);
+        try {
+            System.out.println("Wie viele Hindernisse?:");
+            int i = s.nextInt();
+
+            this.hindernisse = new ArrayList<Rechteck>(i);
+
+            Rechteck neuHinderniss;
+
+            int count = 0;
+
+            for(int index = 0; index < this.hindernisse.size(); index++) {
+                if(count <= 50) {
+                    neuHinderniss = zufallsrechteck(index);
+                    if(index == 0) {
+                        this.hindernisse.set(index,  neuHinderniss);
+                    } else {
+                        for(Rechteck r : this.hindernisse) {
+                            if(r.ueberlappt(neuHinderniss)) {
+                                count++;
+                            } else {
+                                this.hindernisse.set(index,  neuHinderniss);
+                            }
+                        }
+                    }
+                }
+            }
+
+            s.close();
+
+        } catch(Exception e) {
+            s.close();
+            throw e;
+        }
+    }
+
+    private int zufallszahl(int von, int bis) {
+        return zufallsgenerator.nextInt(bis - von + 1) + von; 
+    }
+
+    private Color zufallsfarbe() {
+        return new Color(this.zufallszahl(0, 255), this.zufallszahl(0, 255), this.zufallszahl(0, 255));
+    }
+
+    private Rechteck zufallsrechteck(int index) {
+        return new Rechteck(new Punkt(this.zufallszahl(0, 1000), this.zufallszahl(0, 1000)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
     }
 
 }

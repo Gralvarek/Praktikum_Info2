@@ -79,6 +79,18 @@ public class Rechteck {
         this.position = andererPunkt;
     }
 
+    public boolean ueberlappt(Rechteck r) {
+        if(this.position == r.getPosition()) {
+            if(this.breite == r.getBreite() || this.laenge == r.getLaenge()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public String toString() {
         return String.format("Position: %s\nBreite: %d Laenge: %d\nBezeichnung: %s\nFarbe: %s", this.position, this.breite, this.laenge, this.bezeichnung, this.farbe.toString());
     }
