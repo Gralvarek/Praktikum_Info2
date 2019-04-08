@@ -7,7 +7,6 @@ public class Spielfeld {
     private static int breite = 1000;
     private static int laenge = 1000;
     private Punkt[] poi;
-
     public Spielfeld() {
 
     }
@@ -39,24 +38,27 @@ public class Spielfeld {
     }
 
     public void POI_sortieren() {
-        poi = punkte_eingeben();
         
-        Punkt nextPoint, oldPoint;
-        double sD = 0;
-        double pSD = Double.MAX_VALUE;
+        this.poi = punkte_eingeben();
+        
+        Punkt nextPoint;
+        double sD, pSD;
 
-        for(int x = 0; x < poi.length; x++) {
-            for(int y = x + 1; y < poi.length; y++) {
-                sD = poi[x].gibAbstand(poi[y]);
+        for(int x = 0; x < this.poi.length; x++) {
+            sD = 0;
+            pSD = Double.MAX_VALUE;
+            for(int y = x + 1; y < this.poi.length; y++) {
+                sD = this.poi[x].gibAbstand(poi[y]);
                 if(sD < pSD) {
-                    oldPoint = poi[x + 1];
-                    nextPoint = poi[y];
-                    poi[y] = oldPoint;
-                    poi[x+1] = nextPoint;
+                    nextPoint = poi[x + 1];
+                    poi[x + 1] = poi[y];
+                    poi[y] = nextPoint;
                     pSD = sD;
-                }
+                }       
             }
-            System.out.println(poi[x]);
+        }
+        for(Punkt a : this.poi) {
+            System.out.println(a);
         }
     }
 
