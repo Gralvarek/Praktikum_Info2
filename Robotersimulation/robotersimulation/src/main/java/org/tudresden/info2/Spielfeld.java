@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Spielfeld {
 
-    private static int breite = 1000;
-    private static int laenge = 1000;
+    private static final int BREITE = 1000;
+    private static final int LAENGE = 1000;
 
     private Punkt[] poi;
     private ArrayList<Rechteck> hindernisse;
@@ -16,7 +16,7 @@ public class Spielfeld {
     private static Random zufallsgenerator;
 
     public Spielfeld() {
-
+        zufallsgenerator = new Random();
     }
 
     public Punkt[] punkte_eingeben() {
@@ -77,26 +77,32 @@ public class Spielfeld {
             int i = s.nextInt();
 
             this.hindernisse = new ArrayList<Rechteck>(i);
-
             Rechteck neuHinderniss;
 
             int count = 0;
+            boolean alreadyAdded;
 
-            for(int index = 0; index < this.hindernisse.size(); index++) {
+            for(int index = 0; index < i; index++) {
                 if(count <= 50) {
                     neuHinderniss = zufallsrechteck(index);
                     if(index == 0) {
-                        this.hindernisse.set(index,  neuHinderniss);
+                        this.hindernisse.add(neuHinderniss);
                     } else {
-                        for(Rechteck r : this.hindernisse) {
-                            if(r.ueberlappt(neuHinderniss)) {
+                        alreadyAdded = false;
+                        for(int index2 = index - 1; index2 >= 0; index2--) {
+                            if(neuHinderniss.ueberlappt(this.hindernisse.get(index2)) || alreadyAdded) {
                                 count++;
                             } else {
-                                this.hindernisse.set(index,  neuHinderniss);
+                                this.hindernisse.add(neuHinderniss);
+                                alreadyAdded = true;
                             }
                         }
                     }
                 }
+            }
+
+            for(Rechteck r : this.hindernisse) {
+                System.out.println(r.getPosition());
             }
 
             s.close();
@@ -106,7 +112,7 @@ public class Spielfeld {
             throw e;
         }
     }
-
+    
     private int zufallszahl(int von, int bis) {
         return zufallsgenerator.nextInt(bis - von + 1) + von; 
     }

@@ -10,6 +10,8 @@ public class Rechteck {
     private String bezeichnung;
     private Color farbe;
 
+    private Punkt bottomLeft, topRight;
+
     public Rechteck() {
 
     }
@@ -25,6 +27,9 @@ public class Rechteck {
             System.out.println("Farbe darf nicht weiss sein! Jetzt ist es rot.");
             this.farbe = Color.RED;
         }
+        this.bottomLeft = new Punkt(position.getX() - this.breite/2, position.getY() - this.laenge/2);
+        this.topRight = new Punkt(position.getX() + this.breite/2, position.getY() + this.laenge/2);
+
     }
 
     public Punkt getPosition() {
@@ -80,15 +85,13 @@ public class Rechteck {
     }
 
     public boolean ueberlappt(Rechteck r) {
-        if(this.position == r.getPosition()) {
-            if(this.breite == r.getBreite() || this.laenge == r.getLaenge()) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if(this.topRight.getY() < r.bottomLeft.getY() || this.bottomLeft.getY() > r.topRight.getY()) {
             return false;
         }
+        if(this.topRight.getX() < r.bottomLeft.getX() || this.bottomLeft.getX() > r.topRight.getX()) {
+             return false;
+        }
+        return true;
     }
 
     public String toString() {
