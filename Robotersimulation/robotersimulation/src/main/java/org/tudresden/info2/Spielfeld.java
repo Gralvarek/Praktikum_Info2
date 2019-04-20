@@ -14,9 +14,11 @@ public class Spielfeld {
     private ArrayList<Rechteck> hindernisse;
 
     private static Random zufallsgenerator;
+    private static Roboter robot;
 
     public Spielfeld() {
         zufallsgenerator = new Random();
+        robot = new Roboter();
     }
 
     public Punkt[] punkte_eingeben() {
@@ -125,4 +127,9 @@ public class Spielfeld {
         return new Rechteck(new Punkt(this.zufallszahl(0, 1000), this.zufallszahl(0, 1000)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
     }
 
+    public static void main(String[] args) {
+
+        robot.spracherkennung();
+        
+    }
 }
