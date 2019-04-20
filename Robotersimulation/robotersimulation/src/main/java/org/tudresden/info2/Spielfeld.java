@@ -9,16 +9,19 @@ public class Spielfeld {
 
     private static final int BREITE = 1000;
     private static final int LAENGE = 1000;
+    private static final Color HINTERGRUNDFARBE = Color.WHITE;
 
     private Punkt[] poi;
     private ArrayList<Rechteck> hindernisse;
 
     private static Random zufallsgenerator;
     private static Roboter robot;
+    private static Leinwand leinwand;
 
     public Spielfeld() {
         zufallsgenerator = new Random();
         robot = new Roboter();
+        leinwand = new Leinwand(LAENGE, BREITE, HINTERGRUNDFARBE);
     }
 
     public Punkt[] punkte_eingeben() {
@@ -102,17 +105,17 @@ public class Spielfeld {
                     }
                 }
             }
-
-            for(Rechteck r : this.hindernisse) {
-                System.out.println(r.getPosition());
-            }
-
+            this.zeichnen(hindernisse);
             s.close();
 
         } catch(Exception e) {
             s.close();
             throw e;
         }
+    }
+
+    public void zeichnen(ArrayList<Rechteck> hindernisse) {
+ 
     }
     
     private int zufallszahl(int von, int bis) {
