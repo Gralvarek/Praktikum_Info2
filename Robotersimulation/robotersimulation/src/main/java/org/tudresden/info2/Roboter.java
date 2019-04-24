@@ -48,5 +48,6 @@ public class Roboter {
             }
 
         } while(!stopScan);
+        s.close();
     }
 }
