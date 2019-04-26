@@ -2,14 +2,11 @@ package org.tudresden.info2;
 
 import java.awt.Color;
 
-public class Rechteck {
+public class Rechteck extends Figur {
     
-    private Punkt position;
     private int breite;
     private int laenge;
     private String bezeichnung;
-    private Color farbe;
-
     private Punkt bottomLeft, topRight;
 
     public Rechteck() {
@@ -30,14 +27,6 @@ public class Rechteck {
         this.bottomLeft = new Punkt(position.getX() - this.breite/2, position.getY() - this.laenge/2);
         this.topRight = new Punkt(position.getX() + this.breite/2, position.getY() + this.laenge/2);
 
-    }
-
-    public Punkt getPosition() {
-        return this.position;
-    }
-
-    public void setPosition(Punkt andererPunkt) {
-        this.position = andererPunkt;
     }
 
     public int getBreite() {
@@ -64,26 +53,6 @@ public class Rechteck {
         this.bezeichnung = bezeichnung;
     }
 
-    public Color getFarbe() {
-        return this.farbe;
-    }
-
-    public void setFarbe(Color farbe) {
-        if (farbe != Color.WHITE) {
-            this.farbe = farbe;
-        } else {
-            System.out.println("Farbe darf nicht weiss sein!");
-        }
-    }
-
-    public void bewegeUm(int dx, int dy) {
-        this.position.bewegeUm(dx, dy);
-    }
-
-    public void bewegeUm(Punkt andererPunkt) {
-        this.position = andererPunkt;
-    }
-
     public boolean ueberlappt(Rechteck r) {
         if(this.topRight.getY() < r.bottomLeft.getY() || this.bottomLeft.getY() > r.topRight.getY()) {
             return false;
@@ -96,5 +65,25 @@ public class Rechteck {
 
     public String toString() {
         return String.format("Position: %s\nBreite: %d Laenge: %d\nBezeichnung: %s\nFarbe: %s", this.position, this.breite, this.laenge, this.bezeichnung, this.farbe.toString());
+    }
+
+    @Override
+    public int minX() {
+        return this.breite/2;
+    }
+
+    @Override
+    public int minY() {
+        return this.laenge/2;
+    }
+
+    @Override
+    public int maxX() {
+        return 1000-this.breite/2;
+    }
+
+    @Override
+    public int maxY() {
+        return 1000-this.laenge/2;
     }
 }

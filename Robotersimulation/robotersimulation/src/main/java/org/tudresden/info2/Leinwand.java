@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Leinwand extends JFrame{
 
@@ -24,6 +23,7 @@ public class Leinwand extends JFrame{
 
         this.zeichenflaeche = new Zeichenflaeche();
 
+        fenster.setBackground(this.hintergrundfarbe);
         fenster.add(this.zeichenflaeche);
         fenster.setSize(this.breite, this.laenge);
     }
@@ -43,6 +43,13 @@ public class Leinwand extends JFrame{
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
         fenster.setVisible(false);
         zeichenflaeche.setHindernisse(hindernisse);
+        zeichenflaeche.updateUI();
+        fenster.setVisible(true);
+    }
+
+    public void zeichnen(Roboter robot) {
+        fenster.setVisible(false);
+        zeichenflaeche.setRoboter(robot);
         zeichenflaeche.updateUI();
         fenster.setVisible(true);
     }

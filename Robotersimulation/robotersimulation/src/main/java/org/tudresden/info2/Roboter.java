@@ -1,8 +1,9 @@
 package org.tudresden.info2;
 
+import java.awt.Color;
 import java.util.Scanner;
 
-public class Roboter {
+public class Roboter extends Kreis {
 
     private Stichwort stichwort;
 
@@ -13,8 +14,8 @@ public class Roboter {
         GEBURTSDATUM;
     }
 
-    public Roboter() {
-
+    public Roboter(Punkt position, Color farbe, int durchmesser) {
+        super(position, farbe, durchmesser);
     }
 
     public void spracherkennung() {

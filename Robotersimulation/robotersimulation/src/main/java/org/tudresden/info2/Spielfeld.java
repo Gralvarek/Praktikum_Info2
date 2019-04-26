@@ -15,12 +15,10 @@ public class Spielfeld {
     private ArrayList<Rechteck> hindernisse;
 
     private static Random zufallsgenerator;
-    private static Roboter robot;
     private static Leinwand leinwand;
 
     public Spielfeld() {
         zufallsgenerator = new Random();
-        robot = new Roboter();
         leinwand = new Leinwand(LAENGE, BREITE, HINTERGRUNDFARBE);
     }
 
