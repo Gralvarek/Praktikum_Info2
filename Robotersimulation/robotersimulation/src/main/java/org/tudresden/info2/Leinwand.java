@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class Leinwand extends JFrame{
 
+    private static final long serialVersionUID = -8979930495742157974L;
+
     private static JFrame fenster;
 
     private int laenge, breite;
@@ -19,45 +21,30 @@ public class Leinwand extends JFrame{
         this.laenge = laenge;
         this.breite = breite;
         this.hintergrundfarbe = hintergrundfarbe;
-        zeichenflaeche = new Zeichenflaeche();
-        zeichenflaeche.setPreferredSize(new Dimension(this.breite, this.laenge));
-        zeichenflaeche.setBackground(this.hintergrundfarbe);
 
-        Container cp = getContentPane();
-        cp.add(zeichenflaeche);
+        this.zeichenflaeche = new Zeichenflaeche();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
+        fenster.add(this.zeichenflaeche);
+        fenster.setSize(this.breite, this.laenge);
     }
 
-    public void warten(int millisekunden) {
-
+    public void warten(int millisekunden)
+    {
+        try
+        {
+        Thread.sleep(millisekunden);
+        }
+        catch (Exception e)
+        {
+        // Exception ignorieren
+        }
     }
 
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
-
-    }
-    
-    private class Zeichenflaeche extends JPanel {
-
-        private ArrayList<Rechteck> hindernissRechtecks;
-        
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            for(Rechteck r : hindernissRechtecks) {
-                g.drawRect(r.getPosition().getX(), r.getPosition().getY(), r.getBreite(), r.getLaenge());
-                g.setColor(r.getFarbe());
-            
-            }
-
-        }
-    
-        
-        
-    
+        fenster.setVisible(false);
+        zeichenflaeche.setHindernisse(hindernisse);
+        zeichenflaeche.updateUI();
+        fenster.setVisible(true);
     }
 
 }

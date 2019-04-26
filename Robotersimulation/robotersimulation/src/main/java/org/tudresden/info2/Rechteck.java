@@ -2,7 +2,7 @@ package org.tudresden.info2;
 
 import java.awt.Color;
 
-public class Rechteck<Pu> {
+public class Rechteck {
     
     private Punkt position;
     private int breite;

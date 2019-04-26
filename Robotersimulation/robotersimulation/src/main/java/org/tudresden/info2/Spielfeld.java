@@ -115,7 +115,7 @@ public class Spielfeld {
     }
 
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
- 
+        leinwand.zeichnen(hindernisse);
     }
     
     private int zufallszahl(int von, int bis) {
