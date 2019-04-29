@@ -11,6 +11,9 @@ public class Zeichenflaeche extends JPanel {
 
     private ArrayList<Rechteck> hindernisse;
 
+    public Zeichenflaeche() {
+        super();
+    }
     public void paintComponent(Graphics g) {
         for(Rechteck r : hindernisse) {
             g.fillRect(r.getPosition().getX(), r.getPosition().getY(), r.getBreite(), r.getLaenge());
