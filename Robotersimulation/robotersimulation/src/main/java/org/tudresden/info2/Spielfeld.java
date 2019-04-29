@@ -22,6 +22,32 @@ public class Spielfeld {
         this.zeichnen(new Roboter(new Punkt(4, 5), Color.GREEN, 3));
     }
 
+    public Punkt[] punkte_eingeben() {
+        Scanner s = new Scanner(System.in);
+        
+        try {
+            System.out.println("How many Points of Interest?:");
+            int i = s.nextInt();
+            Punkt[] enteredPoi = new Punkt[i];
+            int x, y;
+
+            for(int index = 0; index < i; index++) {
+                System.out.println("X: ");
+                x = s.nextInt();
+                System.out.println("Y: ");
+                y = s.nextInt();
+                enteredPoi[index] = new Punkt(x, y);
+            }
+
+            s.close();
+            return enteredPoi;
+
+        } catch(Exception e) {
+            s.close();
+            throw e;
+        }
+    }
+
     public void hindernisliste_erzeugen() {
         Scanner s = new Scanner(System.in);
         try {

@@ -19,7 +19,8 @@ public class Roboter extends Kreis {
     }
 
 
-    public void spracherkennung() {
+
+	public void spracherkennung() {
         Scanner s = new Scanner(System.in);
         boolean stopScan = false;
         String line;
