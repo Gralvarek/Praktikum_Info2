@@ -15,12 +15,17 @@ public class Zeichenflaeche extends JPanel {
     public Zeichenflaeche() {
         super();
     }
+
     public void paintComponent(Graphics g) {
-        g.setColor(robot.getFarbe());
-        g.fillOval(robot.getPosition().getX(), robot.getPosition().getY(), robot.getDurchmesser(), robot.getDurchmesser());
-        for(Rechteck r : hindernisse) {
-            g.setColor(r.getFarbe());
-            g.fillRect(r.getPosition().getX(), r.getPosition().getY(), r.getBreite(), r.getLaenge());
+        if(robot != null) {
+            g.setColor(robot.getFarbe());
+            g.fillOval(robot.getPosition().getX(), robot.getPosition().getY(), robot.getDurchmesser(), robot.getDurchmesser());
+        }
+        if (hindernisse != null) {
+            for(Rechteck r : hindernisse) {
+                g.setColor(r.getFarbe());
+                g.fillRect(r.getPosition().getX(), r.getPosition().getY(), r.getBreite(), r.getLaenge());
+            }
         }
     }
 
