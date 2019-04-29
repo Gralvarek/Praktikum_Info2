@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class Leinwand extends JFrame{
+public class Leinwand extends JFrame {
 
     private static final long serialVersionUID = -8979930495742157974L;
 
@@ -22,7 +22,7 @@ public class Leinwand extends JFrame{
         this.hintergrundfarbe = hintergrundfarbe;
 
         this.zeichenflaeche = new Zeichenflaeche();
-
+        fenster = new JFrame();
         fenster.setBackground(this.hintergrundfarbe);
         fenster.add(this.zeichenflaeche);
         fenster.setSize(this.breite, this.laenge);

@@ -12,6 +12,9 @@ public class Zeichenflaeche extends JPanel {
     private ArrayList<Rechteck> hindernisse;
     private Roboter robot;
 
+    public Zeichenflaeche() {
+        super();
+    }
     public void paintComponent(Graphics g) {
         g.setColor(robot.getFarbe());
         g.fillOval(robot.getPosition().getX(), robot.getPosition().getY(), robot.getDurchmesser(), robot.getDurchmesser());
