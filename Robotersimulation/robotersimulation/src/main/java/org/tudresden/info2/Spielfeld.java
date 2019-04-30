@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 public class Spielfeld {
 
+    private static Spielfeld instance;
+
     private static final int BREITE = 1000;
     private static final int LAENGE = 1000;
     private static final Color HINTERGRUNDFARBE = Color.WHITE;
@@ -15,11 +17,21 @@ public class Spielfeld {
 
     private static Random zufallsgenerator;
     private static Leinwand leinwand;
+    private Roboter robot;
 
-    public Spielfeld() {
+    private Spielfeld() {
         zufallsgenerator = new Random();
         leinwand = new Leinwand(LAENGE, BREITE, HINTERGRUNDFARBE);
-        this.zeichnen(new Roboter(new Punkt(4, 5), Color.GREEN, 3));
+        this.robot = new Roboter(new Punkt(4, 5), Color.GREEN, 3);
+        this.zeichnen(this.robot);
+    }
+
+    public static Spielfeld getInstance() {
+        if(instance == null) {
+            return instance = new Spielfeld();
+        } else {
+            return instance;
+        }
     }
 
     public Punkt[] punkte_eingeben() {
@@ -87,6 +99,34 @@ public class Spielfeld {
         }
     }
 
+    public void hindernisse_umfahren() {
+        for(Rechteck r : hindernisse) {
+            if(this.robot.anWand(Spielfeld.BREITE, Spielfeld.LAENGE)) {
+                Roboter.status = Roboter.Status.FINISH;
+            } else if(this.robot.Zwischen_X(r) && this.robot.Zwischen_Y(r)) {
+                Roboter.status = Roboter.Status.FINISH;
+            } else {
+                Roboter.status = Roboter.Status.CONTINUE;
+            }
+        }
+
+        switch(Roboter.status) {
+            case CONTINUE:
+                this.robot.bewegeUm(1, 1);
+                break;
+            case MOVEDOWN:
+                this.robot.bewegeUm(0,1);
+                break;
+            case MOVERIGHT:
+                this.robot.bewegeUm(1,0);
+                break;
+            case FINISH:
+                System.out.println("Robot cannot continue...");
+                break;
+        }
+        this.zeichnen(robot);
+    }
+
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
         leinwand.zeichnen(hindernisse);
     }
@@ -106,6 +146,5 @@ public class Spielfeld {
     private Rechteck zufallsrechteck(int index) {
         return new Rechteck(new Punkt(this.zufallszahl(0, 1000), this.zufallszahl(0, 1000)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
     }
-
     
 }

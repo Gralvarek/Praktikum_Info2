@@ -14,11 +14,18 @@ public class Roboter extends Kreis {
         GEBURTSDATUM;
     }
 
+    public static Status status;
+
+    public enum Status {
+        CONTINUE,
+        MOVEDOWN,
+        MOVERIGHT,
+        FINISH;
+    }
     public Roboter(Punkt position, Color farbe, int durchmesser) {
         super(position, farbe, durchmesser);
+        Roboter.status = Status.CONTINUE;
     }
-
-
 
 	public void spracherkennung() {
         Scanner s = new Scanner(System.in);
@@ -52,5 +59,29 @@ public class Roboter extends Kreis {
 
         } while(!stopScan);
         s.close();
+    }
+
+    public boolean anWand(int WandX, int WandY) {
+        if(this.position.getX() == WandX || this.position.getY() == WandY) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean Zwischen_X(Figur figur) {
+        if(this.position.getX() <= figur.position.getX() + figur.minX() && this.position.getX() >= figur.position.getX() - figur.minX()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean Zwischen_Y(Figur figur) {
+        if(this.position.getY() <= figur.position.getY() + figur.minY() && this.position.getY() >= figur.position.getY() - figur.minY()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
