@@ -3,6 +3,7 @@ package org.tudresden.info2;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,7 +13,6 @@ public class Spielfeld {
 
     private static final int BREITE = 1000;
     private static final int LAENGE = 1000;
-    private static final Color HINTERGRUNDFARBE = Color.WHITE;
 
     private ArrayList<Rechteck> hindernisse;
 
@@ -22,8 +22,8 @@ public class Spielfeld {
 
     private Spielfeld() {
         zufallsgenerator = new Random();
-        leinwand = new Leinwand(LAENGE, BREITE, HINTERGRUNDFARBE);
-        this.robot = new Roboter(new Punkt(5, 5), Color.GREEN, 20);
+        leinwand = Leinwand.getInstance();
+        this.robot = new Roboter(new Punkt(0, 0), Color.GREEN, 30);
         this.zeichnen(this.robot);
     }
 
@@ -62,36 +62,34 @@ public class Spielfeld {
         }
     }
 
-    public void hindernisliste_erzeugen() {
+    public void hindernissliste_erzeugen() {
         Scanner s = new Scanner(System.in);
         try {
             System.out.println("Wie viele Hindernisse?:");
-            int i = s.nextInt();
+            // int size = s.nextInt();
+            int size = zufallszahl(15, 20);
+            this.hindernisse = new ArrayList<Rechteck>(size);
 
-            this.hindernisse = new ArrayList<Rechteck>(i);
             Rechteck neuHinderniss;
-
             int count = 0;
-            boolean alreadyAdded;
 
-            for(int index = 0; index < i; index++) {
-                if(count <= 50) {
-                    neuHinderniss = zufallsrechteck(index);
-                    if(index == 0) {
-                        this.hindernisse.add(neuHinderniss);
-                    } else {
-                        alreadyAdded = false;
-                        for(int index2 = index - 1; index2 >= 0; index2--) {
-                            if(neuHinderniss.ueberlappt(this.hindernisse.get(index2)) || alreadyAdded) {
-                                count++;
-                            } else {
-                                this.hindernisse.add(neuHinderniss);
-                                alreadyAdded = true;
-                            }
+            for(int index = 0; index < size; index++){
+                if(count < 50) {
+                    neuHinderniss = this.zufallsrechteck(index);
+                    this.hindernisse.add(neuHinderniss);
+                    Iterator<Rechteck> iter = this.hindernisse.iterator();
+                    int iterI = 0;
+                    while(iter.hasNext() && iterI != this.hindernisse.size() - 1){
+                        if(iter.next().ueberlappt(neuHinderniss)) {
+                            iter.remove();
+                            count++;
                         }
+                        iterI++;
                     }
                 }
+                leinwand.warten(1);
             }
+            
             this.zeichnen(hindernisse);
             s.close();
 
@@ -105,14 +103,21 @@ public class Spielfeld {
         for(Rechteck r : hindernisse) {
             if(this.robot.anWand(Spielfeld.BREITE, Spielfeld.LAENGE)) {
                 Roboter.status = Roboter.Status.FINISH;
+                break;
             } else if(this.robot.Zwischen_X(r) && this.robot.Zwischen_Y(r)) {
                 Roboter.status = Roboter.Status.FINISH;
-            } else if(this.robot.ZuNah_linkeKante(r) && this.robot.ZuNah_obereKante(r)) {
+                break;
+            } else if(this.robot.ZuNah_linkeKante(r, 30) && this.robot.ZuNah_obereKante(r, 30.0)) {
                 Roboter.status = Roboter.Status.FINISH;
-            } else if(this.robot.ZuNah_linkeKante(r)) {
+                break;
+            }
+
+            if(this.robot.ZuNah_linkeKante(r, 50.0)) {
+                Roboter.status = Roboter.Status.MOVEDOWN;
+                break;
+            } else if(this.robot.ZuNah_obereKante(r, 50.0)) {
                 Roboter.status = Roboter.Status.MOVERIGHT;
-            } else if(this.robot.ZuNah_obereKante(r)) {
-                Roboter.status = Roboter.Status.MOVERIGHT;
+                break;
             } else {
                 Roboter.status = Roboter.Status.CONTINUE;
             }
@@ -120,7 +125,7 @@ public class Spielfeld {
 
         switch(Roboter.status) {
             case CONTINUE:
-                this.robot.bewegeUm(1, 1);
+                this.robot.bewegeUm(1,1);
                 break;
             case MOVEDOWN:
                 this.robot.bewegeUm(0,1);
@@ -133,6 +138,7 @@ public class Spielfeld {
                 break;
         }
         this.zeichnen(robot);
+        leinwand.warten(10);
     }
 
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
@@ -148,11 +154,11 @@ public class Spielfeld {
     }
 
     private Color zufallsfarbe() {
-        return new Color(this.zufallszahl(0, 255), this.zufallszahl(0, 255), this.zufallszahl(0, 255));
+        return new Color(this.zufallszahl(50, 255), this.zufallszahl(50, 255), this.zufallszahl(50, 255));
     }
 
     private Rechteck zufallsrechteck(int index) {
-        return new Rechteck(new Punkt(this.zufallszahl(0, 1000), this.zufallszahl(0, 1000)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
+        return new Rechteck(new Punkt(this.zufallszahl(50, BREITE), this.zufallszahl(50, LAENGE)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
     }
     
 }

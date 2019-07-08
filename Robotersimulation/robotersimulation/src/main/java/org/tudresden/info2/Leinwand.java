@@ -11,20 +11,27 @@ public class Leinwand extends JFrame {
 
     private static JFrame fenster;
 
-    private int laenge, breite;
-    private Color hintergrundfarbe;
+    private static final int LAENGE = 1000;
+    private static final int BREITE = 1000;
+    private static final Color HINTERGRUNDFARBE = Color.WHITE;
+
+    private static Leinwand instance;
     
     private Zeichenflaeche zeichenflaeche;
 
-    public Leinwand(int laenge, int breite, Color hintergrundfarbe) {
-        this.laenge = laenge;
-        this.breite = breite;
-        this.hintergrundfarbe = hintergrundfarbe;
+    public static Leinwand getInstance() {
+        if(instance == null) {
+            return instance = new Leinwand();
+        } else {
+            return instance;
+        }
+    }
+    private Leinwand() {
 
         this.zeichenflaeche = new Zeichenflaeche();
         fenster = new JFrame();
-        fenster.setBackground(this.hintergrundfarbe);
-        fenster.setSize(this.breite, this.laenge);
+        fenster.setBackground(HINTERGRUNDFARBE);
+        fenster.setSize(BREITE, LAENGE);
         fenster.add(this.zeichenflaeche);
         fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenster.setVisible(true);

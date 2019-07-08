@@ -19,12 +19,12 @@ public class Zeichenflaeche extends JPanel {
     public void paintComponent(Graphics g) {
         if(robot != null) {
             g.setColor(robot.getFarbe());
-            g.fillOval(robot.getPosition().getX(), robot.getPosition().getY(), robot.getDurchmesser(), robot.getDurchmesser());
+            g.fillOval(robot.minX(), robot.minY(), robot.getDurchmesser(), robot.getDurchmesser());
         }
         if (hindernisse != null) {
             for(Rechteck r : hindernisse) {
                 g.setColor(r.getFarbe());
-                g.fillRect(r.getPosition().getX(), r.getPosition().getY(), r.getBreite(), r.getLaenge());
+                g.fillRect(r.minX(), r.minY(), r.getBreite(), r.getLaenge());
             }
         }
     }

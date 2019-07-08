@@ -7,6 +7,7 @@ public class Roboter extends Kreis {
 
     private Stichwort stichwort;
 
+    public double abstand;
     public enum Stichwort {
         NAME,
         HERSTELLER,
@@ -85,13 +86,13 @@ public class Roboter extends Kreis {
         }
     }
 
-    public boolean ZuNah_linkeKante(Figur figur) {
-        double abstand = this.position.gibAbstand(figur.getPosition());
-        return false;
+    public boolean ZuNah_linkeKante(Figur figur, double toleranz) {
+        abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
+        return (toleranz > abstand) && this.Zwischen_Y(figur);
     }
 
-    public boolean ZuNah_obereKante(Figur figur) {
-        double abstand = this.position.gibAbstand(figur.getPosition());
-        return false;
+    public boolean ZuNah_obereKante(Figur figur, double toleranz) {
+        abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
+        return (toleranz > abstand) && this.Zwischen_X(figur);
     }
 }

@@ -54,11 +54,11 @@ public class Rechteck extends Figur {
     }
 
     public boolean ueberlappt(Rechteck r) {
-        if(this.topLeft.getY() < r.bottomRight.getY() || this.bottomRight.getY() > r.topLeft.getY()) {
+        if(this.minX() > r.maxX() || r.minX() > this.maxX()){
             return false;
         }
-        if(this.topLeft.getX() > r.bottomRight.getX() || this.bottomRight.getX() < r.topLeft.getX()) {
-             return false;
+        if(this.minY() > r.maxY() || r.minY() > this.maxY()){
+            return false;
         }
         return true;
     }
