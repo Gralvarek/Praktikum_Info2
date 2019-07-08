@@ -5,9 +5,9 @@ public class Main {
 
         Spielfeld sf = Spielfeld.getInstance();
         sf.hindernissliste_erzeugen();
-        while(Roboter.status != Roboter.Status.FINISH) {
-            sf.hindernisse_umfahren();
-        }
+        sf.POI_sortieren();
+        sf.hindernisse_umfahren();
+    
         
     }
 }

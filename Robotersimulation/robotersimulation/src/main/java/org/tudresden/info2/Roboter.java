@@ -40,15 +40,19 @@ public class Roboter extends Kreis {
             switch(line) {
                 case "Name":
                     stichwort = Stichwort.NAME;
+                    System.out.println("I'm BOB!");
                     break;
                 case "Hersteller":
                     stichwort = Stichwort.HERSTELLER;
+                    System.out.println("I was made by James!");
                     break;
                 case "Geschlecht":
                     stichwort = Stichwort.GESCHLECHT;
+                    System.out.println("Robots don't have a sex silly, but a gender sure. We aren't close enough yet though. ;)");
                     break;
                 case "Geburtsdatum":
                     stichwort = Stichwort.GEBURTSDATUM;
+                    System.out.println("4/20/69");
                     break;
                 case "Ende":
                     stopScan = true;
@@ -96,6 +100,16 @@ public class Roboter extends Kreis {
     }
 
     public boolean ZuNah_obereKante(Figur figur, double toleranz) {
+        abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
+        return (toleranz >= abstand) && this.Zwischen_X(figur);
+    }
+
+    public boolean ZuNah_rechteKante(Figur figur, double toleranz) {
+        abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
+        return (toleranz >= abstand) && this.Zwischen_Y(figur);
+    }
+
+    public boolean ZuNah_untereKante(Figur figur, double toleranz) {
         abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
         return (toleranz >= abstand) && this.Zwischen_X(figur);
     }
