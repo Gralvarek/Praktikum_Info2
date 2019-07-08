@@ -2,6 +2,7 @@ package org.tudresden.info2;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class Spielfeld {
     private Spielfeld() {
         zufallsgenerator = new Random();
         leinwand = new Leinwand(LAENGE, BREITE, HINTERGRUNDFARBE);
-        this.robot = new Roboter(new Punkt(4, 5), Color.GREEN, 3);
+        this.robot = new Roboter(new Punkt(5, 5), Color.GREEN, 20);
         this.zeichnen(this.robot);
     }
 
@@ -54,7 +55,8 @@ public class Spielfeld {
             s.close();
             return enteredPoi;
 
-        } catch(Exception e) {
+        } catch(InputMismatchException e) {
+            System.out.println(e);
             s.close();
             throw e;
         }
@@ -105,6 +107,12 @@ public class Spielfeld {
                 Roboter.status = Roboter.Status.FINISH;
             } else if(this.robot.Zwischen_X(r) && this.robot.Zwischen_Y(r)) {
                 Roboter.status = Roboter.Status.FINISH;
+            } else if(this.robot.ZuNah_linkeKante(r) && this.robot.ZuNah_obereKante(r)) {
+                Roboter.status = Roboter.Status.FINISH;
+            } else if(this.robot.ZuNah_linkeKante(r)) {
+                Roboter.status = Roboter.Status.MOVERIGHT;
+            } else if(this.robot.ZuNah_obereKante(r)) {
+                Roboter.status = Roboter.Status.MOVERIGHT;
             } else {
                 Roboter.status = Roboter.Status.CONTINUE;
             }

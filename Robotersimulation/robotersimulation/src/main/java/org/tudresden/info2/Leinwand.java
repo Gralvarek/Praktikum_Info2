@@ -26,7 +26,8 @@ public class Leinwand extends JFrame {
         fenster.setBackground(this.hintergrundfarbe);
         fenster.setSize(this.breite, this.laenge);
         fenster.add(this.zeichenflaeche);
-        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        fenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenster.setVisible(true);
 
     }
 
@@ -45,20 +46,16 @@ public class Leinwand extends JFrame {
      * Hides the frame, sets the obstacles, reopens the frame
      */
     public void zeichnen(ArrayList<Rechteck> hindernisse) {
-        fenster.setVisible(false);
         zeichenflaeche.setHindernisse(hindernisse);
         zeichenflaeche.updateUI();
-        fenster.setVisible(true);
     }
 
     /*
      * Hides the frame, sets the robot, reopens the frame
      */
     public void zeichnen(Roboter robot) {
-        fenster.setVisible(false);
         zeichenflaeche.setRoboter(robot);
         zeichenflaeche.updateUI();
-        fenster.setVisible(true);
     }
 
 }

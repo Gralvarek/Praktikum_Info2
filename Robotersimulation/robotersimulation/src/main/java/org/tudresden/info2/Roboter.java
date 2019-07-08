@@ -70,7 +70,7 @@ public class Roboter extends Kreis {
     }
 
     public boolean Zwischen_X(Figur figur) {
-        if(this.position.getX() <= figur.position.getX() + figur.minX() && this.position.getX() >= figur.position.getX() - figur.minX()) {
+        if(this.position.getX() <= figur.maxX() && this.position.getX() >= figur.minX()) {
             return true;
         } else {
             return false;
@@ -78,10 +78,20 @@ public class Roboter extends Kreis {
     }
 
     public boolean Zwischen_Y(Figur figur) {
-        if(this.position.getY() <= figur.position.getY() + figur.minY() && this.position.getY() >= figur.position.getY() - figur.minY()) {
+        if(this.position.getY() <= figur.maxY() && this.position.getY() >= figur.minY()) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean ZuNah_linkeKante(Figur figur) {
+        double abstand = this.position.gibAbstand(figur.getPosition());
+        return false;
+    }
+
+    public boolean ZuNah_obereKante(Figur figur) {
+        double abstand = this.position.gibAbstand(figur.getPosition());
+        return false;
     }
 }

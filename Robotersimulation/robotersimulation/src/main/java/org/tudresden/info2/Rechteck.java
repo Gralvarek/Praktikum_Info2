@@ -7,7 +7,7 @@ public class Rechteck extends Figur {
     private int breite;
     private int laenge;
     private String bezeichnung;
-    private Punkt bottomLeft, topRight;
+    private Punkt bottomRight, topLeft;
 
     public Rechteck() {
 
@@ -24,8 +24,8 @@ public class Rechteck extends Figur {
             System.out.println("Farbe darf nicht weiss sein! Jetzt ist es rot.");
             this.farbe = Color.RED;
         }
-        this.bottomLeft = new Punkt(position.getX() - this.breite/2, position.getY() - this.laenge/2);
-        this.topRight = new Punkt(position.getX() + this.breite/2, position.getY() + this.laenge/2);
+        this.bottomRight = new Punkt(position.getX() + this.breite/2, position.getY() + this.laenge/2);
+        this.topLeft = new Punkt(position.getX() - this.breite/2, position.getY() - this.laenge/2);
 
     }
 
@@ -54,10 +54,10 @@ public class Rechteck extends Figur {
     }
 
     public boolean ueberlappt(Rechteck r) {
-        if(this.topRight.getY() < r.bottomLeft.getY() || this.bottomLeft.getY() > r.topRight.getY()) {
+        if(this.topLeft.getY() < r.bottomRight.getY() || this.bottomRight.getY() > r.topLeft.getY()) {
             return false;
         }
-        if(this.topRight.getX() < r.bottomLeft.getX() || this.bottomLeft.getX() > r.topRight.getX()) {
+        if(this.topLeft.getX() > r.bottomRight.getX() || this.bottomRight.getX() < r.topLeft.getX()) {
              return false;
         }
         return true;
@@ -69,21 +69,21 @@ public class Rechteck extends Figur {
 
     @Override
     public int minX() {
-        return this.breite/2;
+        return this.topLeft.getX();
     }
 
     @Override
     public int minY() {
-        return this.laenge/2;
+        return this.topLeft.getY();
     }
 
     @Override
     public int maxX() {
-        return 1000-this.breite/2;
+        return this.bottomRight.getX();
     }
 
     @Override
     public int maxY() {
-        return 1000-this.laenge/2;
+        return this.bottomRight.getY();
     }
 }

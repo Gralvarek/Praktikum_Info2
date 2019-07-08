@@ -22,22 +22,22 @@ public class Kreis extends Figur {
 
     @Override
     public int minX() {
-        return durchmesser;
+        return this.position.getX() - durchmesser/2;
     }
 
     @Override
     public int minY() {
-        return durchmesser;
+        return this.position.getY() - durchmesser/2;
     }
 
     @Override
     public int maxX() {
-        return 1000-durchmesser;
+        return this.position.getX() + durchmesser/2;
     }
 
     @Override
     public int maxY() {
-        return 1000-durchmesser;
+        return this.position.getY() + durchmesser/2;
     }
     
 }
