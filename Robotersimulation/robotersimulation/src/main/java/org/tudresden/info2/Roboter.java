@@ -71,7 +71,9 @@ public class Roboter extends Kreis {
     }
 
     public boolean Zwischen_X(Figur figur) {
-        if(this.position.getX() <= figur.maxX() && this.position.getX() >= figur.minX()) {
+        if(this.maxX() < figur.maxX() && this.maxX() > figur.minX()) {
+            return true;
+        } else if(this.minX() < figur.maxX() && this.minX() > figur.minX()) {
             return true;
         } else {
             return false;
@@ -79,7 +81,9 @@ public class Roboter extends Kreis {
     }
 
     public boolean Zwischen_Y(Figur figur) {
-        if(this.position.getY() <= figur.maxY() && this.position.getY() >= figur.minY()) {
+        if(this.maxY() < figur.maxY() && this.maxY() > figur.minY()) {
+            return true;
+        } else if(this.minY() < figur.maxY() && this.minY() > figur.minY()) {
             return true;
         } else {
             return false;
@@ -88,11 +92,11 @@ public class Roboter extends Kreis {
 
     public boolean ZuNah_linkeKante(Figur figur, double toleranz) {
         abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
-        return (toleranz > abstand) && this.Zwischen_Y(figur);
+        return (toleranz >= abstand) && this.Zwischen_Y(figur);
     }
 
     public boolean ZuNah_obereKante(Figur figur, double toleranz) {
         abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
-        return (toleranz > abstand) && this.Zwischen_X(figur);
+        return (toleranz >= abstand) && this.Zwischen_X(figur);
     }
 }

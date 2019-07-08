@@ -20,6 +20,8 @@ public class Spielfeld {
     private static Leinwand leinwand;
     private Roboter robot;
 
+    private Punkt[] poi;
+
     private Spielfeld() {
         zufallsgenerator = new Random();
         leinwand = Leinwand.getInstance();
@@ -62,12 +64,35 @@ public class Spielfeld {
         }
     }
 
+    public void POI_sortieren() {
+        
+        this.poi = punkte_eingeben();
+        
+        Punkt nextPoint;
+        double sD, pSD;
+
+        for(int x = 0; x < this.poi.length; x++) {
+            sD = 0;
+            pSD = Double.MAX_VALUE;
+            for(int y = x + 1; y < this.poi.length; y++) {
+                sD = this.poi[x].gibAbstand(poi[y]);
+                if(sD < pSD) {
+                    nextPoint = poi[x + 1];
+                    poi[x + 1] = poi[y];
+                    poi[y] = nextPoint;
+                    pSD = sD;
+                }       
+            }
+        }
+        for(Punkt a : this.poi) {
+            System.out.println(a);
+        }
+    }
+
     public void hindernissliste_erzeugen() {
         Scanner s = new Scanner(System.in);
         try {
-            System.out.println("Wie viele Hindernisse?:");
-            // int size = s.nextInt();
-            int size = zufallszahl(15, 20);
+            int size = zufallszahl(15, 50);
             this.hindernisse = new ArrayList<Rechteck>(size);
 
             Rechteck neuHinderniss;
@@ -100,29 +125,36 @@ public class Spielfeld {
     }
 
     public void hindernisse_umfahren() {
-        for(Rechteck r : hindernisse) {
+        Roboter.status = Roboter.Status.CONTINUE;
+        for(int index = 0; index < this.hindernisse.size(); index++) {
+            if(this.robot.ZuNah_linkeKante(this.hindernisse.get(index), 40.0)) {
+                for(int indexD = 0; indexD < this.hindernisse.size(); indexD++) {
+                    if(this.robot.ZuNah_obereKante(this.hindernisse.get(indexD), 30.0) && indexD != index) {
+                        Roboter.status = Roboter.Status.FINISH;
+                        break; 
+                    } else {
+                        Roboter.status = Roboter.Status.MOVEDOWN;
+                    }
+
+                }
+            }
+            if(this.robot.ZuNah_obereKante(this.hindernisse.get(index), 40.0)) {
+                for(int indexR = 0; indexR < this.hindernisse.size(); indexR++) {
+                    if(this.robot.ZuNah_linkeKante(this.hindernisse.get(indexR), 30.0) && indexR != index) {
+                        Roboter.status = Roboter.Status.FINISH;
+                        break;
+                    } else {
+                        Roboter.status = Roboter.Status.MOVERIGHT;
+                    }
+                    
+                }
+                
+            }
             if(this.robot.anWand(Spielfeld.BREITE, Spielfeld.LAENGE)) {
                 Roboter.status = Roboter.Status.FINISH;
                 break;
-            } else if(this.robot.Zwischen_X(r) && this.robot.Zwischen_Y(r)) {
-                Roboter.status = Roboter.Status.FINISH;
-                break;
-            } else if(this.robot.ZuNah_linkeKante(r, 30) && this.robot.ZuNah_obereKante(r, 30.0)) {
-                Roboter.status = Roboter.Status.FINISH;
-                break;
-            }
-
-            if(this.robot.ZuNah_linkeKante(r, 50.0)) {
-                Roboter.status = Roboter.Status.MOVEDOWN;
-                break;
-            } else if(this.robot.ZuNah_obereKante(r, 50.0)) {
-                Roboter.status = Roboter.Status.MOVERIGHT;
-                break;
-            } else {
-                Roboter.status = Roboter.Status.CONTINUE;
             }
         }
-
         switch(Roboter.status) {
             case CONTINUE:
                 this.robot.bewegeUm(1,1);
@@ -158,7 +190,7 @@ public class Spielfeld {
     }
 
     private Rechteck zufallsrechteck(int index) {
-        return new Rechteck(new Punkt(this.zufallszahl(50, BREITE), this.zufallszahl(50, LAENGE)), zufallszahl(0, 100), zufallszahl(0, 100), "Rechteck " + index, zufallsfarbe());
+        return new Rechteck(new Punkt(this.zufallszahl(50, BREITE), this.zufallszahl(50, LAENGE)), zufallszahl(25, 100), zufallszahl(25, 100), "Rechteck " + index, zufallsfarbe());
     }
     
 }
