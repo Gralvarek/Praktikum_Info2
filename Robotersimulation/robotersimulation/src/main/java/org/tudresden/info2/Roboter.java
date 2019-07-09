@@ -1,18 +1,17 @@
 package org.tudresden.info2;
 
 import java.awt.Color;
-import java.util.Scanner;
 
 public class Roboter extends Kreis {
 
     private Stichwort stichwort;
 
-    public double abstand;
     public enum Stichwort {
         NAME,
-        HERSTELLER,
-        GESCHLECHT,
-        GEBURTSDATUM;
+        CREATOR,
+        SEX,
+        AGE,
+        END;
     }
 
     public static Status status;
@@ -22,48 +21,71 @@ public class Roboter extends Kreis {
         MOVEDOWN,
         MOVERIGHT,
         FINISH;
-    }
+    }    
+
     public Roboter(Punkt position, Color farbe, int durchmesser) {
         super(position, farbe, durchmesser);
         Roboter.status = Status.CONTINUE;
     }
 
 	public void spracherkennung() {
-        Scanner s = new Scanner(System.in);
         boolean stopScan = false;
         String line;
 
         do {
-            System.out.println("Please choose a command: Name, Hersteller, Geschlecht, Geburtsdatum, Ende...");
-            line = s.nextLine();
+            line = Main.scan.nextLine();
+            line = line.toLowerCase();
+            line = line.replace("?", "");
+            String[] words = line.split(" ");
+            for(String str: words) {
+                switch(str) {
+                    case "name":
+                        this.stichwort = Stichwort.NAME;
+                        break;
+                    case "creator":
+                        this.stichwort = Stichwort.CREATOR;
+                        break;
+                    case "sex":
+                        this.stichwort = Stichwort.SEX;
+                        break;
+                    case "age":
+                        this.stichwort = Stichwort.AGE;
+                        break;
+                    case "old":
+                        this.stichwort = Stichwort.AGE;
+                        break;
+                    case "start":
+                        this.stichwort = Stichwort.END;
+                        break;
+                    case "end":
+                        this.stichwort = Stichwort.END;
+                        break;
+                }
 
-            switch(line) {
-                case "Name":
-                    stichwort = Stichwort.NAME;
+            }
+            switch(this.stichwort) {
+                case NAME:
                     System.out.println("I'm BOB!");
                     break;
-                case "Hersteller":
-                    stichwort = Stichwort.HERSTELLER;
+                case CREATOR:
                     System.out.println("I was made by James!");
                     break;
-                case "Geschlecht":
-                    stichwort = Stichwort.GESCHLECHT;
+                case SEX:
                     System.out.println("Robots don't have a sex silly, but a gender sure. We aren't close enough yet though. ;)");
                     break;
-                case "Geburtsdatum":
-                    stichwort = Stichwort.GEBURTSDATUM;
+                case AGE:
                     System.out.println("4/20/69");
                     break;
-                case "Ende":
+                case END:
                     stopScan = true;
                     System.out.println("Ending...");
+                    System.out.println("Starting path finding mission now...");
                     break;
                 default:
                     System.out.println("Please enter a valid command...");
             }
 
         } while(!stopScan);
-        s.close();
     }
 
     public boolean anWand(int WandX, int WandY) {
@@ -94,23 +116,13 @@ public class Roboter extends Kreis {
         }
     }
 
-    public boolean ZuNah_linkeKante(Figur figur, double toleranz) {
-        abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
+    public boolean ZuNah_vertikaleKante(Figur figur, double toleranz) {
+        double abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
         return (toleranz >= abstand) && this.Zwischen_Y(figur);
     }
 
-    public boolean ZuNah_obereKante(Figur figur, double toleranz) {
-        abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
-        return (toleranz >= abstand) && this.Zwischen_X(figur);
-    }
-
-    public boolean ZuNah_rechteKante(Figur figur, double toleranz) {
-        abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
-        return (toleranz >= abstand) && this.Zwischen_Y(figur);
-    }
-
-    public boolean ZuNah_untereKante(Figur figur, double toleranz) {
-        abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
+    public boolean ZuNah_horizontaleKante(Figur figur, double toleranz) {
+        double abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
         return (toleranz >= abstand) && this.Zwischen_X(figur);
     }
 }

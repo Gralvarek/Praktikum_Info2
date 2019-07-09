@@ -32,7 +32,7 @@ public abstract class Figur {
     }
 
     public void bewegeUm(Punkt andererPunkt) {
-        this.position = andererPunkt;
+        this.position.bewegeUm(andererPunkt.getX() - this.position.getX(), andererPunkt.getY() - this.position.getY());
     }
 
     public abstract int minX();

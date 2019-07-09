@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Spielfeld {
 
@@ -37,28 +36,29 @@ public class Spielfeld {
         }
     }
 
+    public Roboter getRobot() {
+        return this.robot;
+    }
+
     public Punkt[] punkte_eingeben() {
-        Scanner s = new Scanner(System.in);
         try {
             System.out.println("How many Points of Interest?:");
-            int i = s.nextInt();
+            int i = Main.scan.nextInt();
             Punkt[] enteredPoi = new Punkt[i];
             int x, y;
 
             for(int index = 0; index < i; index++) {
                 System.out.println("X: ");
-                x = s.nextInt();
+                x = Main.scan.nextInt();
                 System.out.println("Y: ");
-                y = s.nextInt();
+                y = Main.scan.nextInt();
                 enteredPoi[index] = new Punkt(x, y);
             }
 
-            s.close();
             return enteredPoi;
 
         } catch(InputMismatchException e) {
             System.out.println(e);
-            s.close();
             throw e;
         }
     }
@@ -125,9 +125,9 @@ public class Spielfeld {
             while(this.robot.getPosition().gibAbstand(p) > 50) {
                 Roboter.status = Roboter.Status.CONTINUE;
                 for(int index = 0; index < this.hindernisse.size(); index++) {
-                    if(this.robot.ZuNah_linkeKante(this.hindernisse.get(index), 40.0)) {
+                    if(this.robot.ZuNah_vertikaleKante(this.hindernisse.get(index), 35.0)) {
                         for(int indexD = 0; indexD < this.hindernisse.size(); indexD++) {
-                            if(this.robot.ZuNah_obereKante(this.hindernisse.get(indexD), 20.0) && indexD != index) {
+                            if(this.robot.ZuNah_horizontaleKante(this.hindernisse.get(indexD), 20.0) && indexD != index) {
                                 Roboter.status = Roboter.Status.FINISH;
                                 break; 
                             } else {
@@ -136,9 +136,9 @@ public class Spielfeld {
 
                         }
                     }
-                    if(this.robot.ZuNah_obereKante(this.hindernisse.get(index), 40.0)) {
+                    if(this.robot.ZuNah_horizontaleKante(this.hindernisse.get(index), 35.0)) {
                         for(int indexR = 0; indexR < this.hindernisse.size(); indexR++) {
-                            if(this.robot.ZuNah_linkeKante(this.hindernisse.get(indexR), 20.0) && indexR != index) {
+                            if(this.robot.ZuNah_vertikaleKante(this.hindernisse.get(indexR), 20.0) && indexR != index) {
                                 Roboter.status = Roboter.Status.FINISH;
                                 break;
                             } else {
@@ -157,7 +157,7 @@ public class Spielfeld {
                     case CONTINUE:
                         int dx = p.getX() - this.robot.getPosition().getX();
                         int dy = p.getY() - this.robot.getPosition().getY();
-                        this.robot.bewegeUm((int)Math.ceil(dx/Math.sqrt(dx*dx + dy*dy)), (int) Math.ceil(dy/Math.sqrt(dx*dx + dy*dy)));
+                        this.robot.bewegeUm((int)Math.ceil(dx/p.gibAbstand(this.robot.getPosition())), (int) Math.ceil(dy/p.gibAbstand(this.robot.getPosition())));
                         break;
                     case MOVEDOWN:
                         this.robot.bewegeUm(0,1);
