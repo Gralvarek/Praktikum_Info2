@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=position\ farbe\ durchmesser
+comment0.target=Roboter(Punkt,\ java.awt.Color,\ int)
+comment1.params=
+comment1.target=void\ spracherkennung()
+comment2.params=WandX\ WandY
+comment2.target=boolean\ anWand(int,\ int)
+comment3.params=figur
+comment3.target=boolean\ Zwischen_X(Figur)
+comment4.params=figur
+comment4.target=boolean\ Zwischen_Y(Figur)
+comment5.params=figur\ toleranz
+comment5.target=boolean\ ZuNah_vertikaleKante(Figur,\ double)
+comment6.params=figur\ toleranz
+comment6.target=boolean\ ZuNah_horizontaleKante(Figur,\ double)
+numComments=7

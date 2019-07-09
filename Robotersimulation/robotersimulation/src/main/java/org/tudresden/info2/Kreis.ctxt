@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=position\ farbe\ durchmesser
+comment0.target=Kreis(Punkt,\ java.awt.Color,\ int)
+comment1.params=
+comment1.target=int\ getDurchmesser()
+comment2.params=durchmesser
+comment2.target=void\ setDurchmesser(int)
+comment3.params=
+comment3.target=int\ minX()
+comment4.params=
+comment4.target=int\ minY()
+comment5.params=
+comment5.target=int\ maxX()
+comment6.params=
+comment6.target=int\ maxY()
+numComments=7

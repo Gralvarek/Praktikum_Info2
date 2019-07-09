@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=andererPunkt
+comment0.target=void\ setPosition(Punkt)
+comment1.params=
+comment1.target=Punkt\ getPosition()
+comment2.params=
+comment2.target=java.awt.Color\ getFarbe()
+comment3.params=farbe
+comment3.target=void\ setFarbe(java.awt.Color)
+comment4.params=dx\ dy
+comment4.target=void\ bewegeUm(int,\ int)
+comment5.params=andererPunkt
+comment5.target=void\ bewegeUm(Punkt)
+comment6.params=
+comment6.target=int\ minX()
+comment7.params=
+comment7.target=int\ minY()
+comment8.params=
+comment8.target=int\ maxX()
+comment9.params=
+comment9.target=int\ maxY()
+numComments=10
