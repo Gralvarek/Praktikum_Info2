@@ -21,6 +21,7 @@ public class Spielfeld {
 
     private Punkt[] poi;
 
+    // private constructor
     private Spielfeld() {
         zufallsgenerator = new Random();
         leinwand = Leinwand.getInstance();
@@ -28,6 +29,7 @@ public class Spielfeld {
         this.zeichnen(this.robot);
     }
 
+    // singleton
     public static Spielfeld getInstance() {
         if(instance == null) {
             return instance = new Spielfeld();
@@ -36,10 +38,12 @@ public class Spielfeld {
         }
     }
 
+    // gets the robot
     public Roboter getRobot() {
         return this.robot;
     }
 
+    // function to add in points for the robot to take
     public Punkt[] punkte_eingeben() {
         try {
             System.out.println("How many Points of Interest?:");
@@ -63,6 +67,7 @@ public class Spielfeld {
         }
     }
 
+    // sorts out the given points based on absolute distance between them
     public void POI_sortieren() {
         
         this.poi = punkte_eingeben();
@@ -85,6 +90,7 @@ public class Spielfeld {
         }
     }
 
+    // creates a random number of obstacles between 15 and 50
     public void hindernissliste_erzeugen() {
         // Scanner s = new Scanner(System.in);
         try {
@@ -120,6 +126,7 @@ public class Spielfeld {
         }
     }
 
+    // robot navigation code, iterates over each point given by the punkte_eingeben() function
     public void hindernisse_umfahren() {
         for(Punkt p : this.poi) {
             while(this.robot.getPosition().gibAbstand(p) > 50) {
@@ -183,14 +190,17 @@ public class Spielfeld {
         leinwand.zeichnen(robot);
     }
     
+    // random number generator
     private int zufallszahl(int von, int bis) {
         return zufallsgenerator.nextInt(bis - von + 1) + von; 
     }
 
+    // random color generator
     private Color zufallsfarbe() {
         return new Color(this.zufallszahl(50, 255), this.zufallszahl(50, 255), this.zufallszahl(50, 255));
     }
 
+    // random rectangle generator
     private Rechteck zufallsrechteck(int index) {
         return new Rechteck(new Punkt(this.zufallszahl(50, BREITE), this.zufallszahl(50, LAENGE)), zufallszahl(25, 100), zufallszahl(25, 100), "Rechteck " + index, zufallsfarbe());
     }

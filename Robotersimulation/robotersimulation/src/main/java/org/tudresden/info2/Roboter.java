@@ -6,6 +6,7 @@ public class Roboter extends Kreis {
 
     private Stichwort stichwort;
 
+    // enum acting as status flag for the QNA session
     public enum Stichwort {
         NAME,
         CREATOR,
@@ -16,6 +17,7 @@ public class Roboter extends Kreis {
 
     public static Status status;
 
+    // enum acting as status flag for robot on the playing field
     public enum Status {
         CONTINUE,
         MOVEDOWN,
@@ -23,20 +25,22 @@ public class Roboter extends Kreis {
         FINISH;
     }    
 
+    // public constructor
     public Roboter(Punkt position, Color farbe, int durchmesser) {
         super(position, farbe, durchmesser);
         Roboter.status = Status.CONTINUE;
     }
 
+    // Start of the qna code
 	public void spracherkennung() {
-        boolean stopScan = false;
-        String line;
+        boolean stopScan = false; // flag to end qna session
+        String line; // line to be read into
 
         do {
             line = Main.scan.nextLine();
-            line = line.toLowerCase();
-            line = line.replace("?", "");
-            String[] words = line.split(" ");
+            line = line.toLowerCase(); // sets the readin line to all lower case for easier parsing
+            line = line.replace("?", ""); // removes the question mark so that it doesn't interfere with the program
+            String[] words = line.split(" "); // splits the string into an array with a bunch of words
             for(String str: words) {
                 switch(str) {
                     case "name":
@@ -63,7 +67,7 @@ public class Roboter extends Kreis {
                 }
 
             }
-            switch(this.stichwort) {
+            switch(this.stichwort) { // based on what was inputted, returns different output
                 case NAME:
                     System.out.println("I'm BOB!");
                     break;
@@ -88,6 +92,7 @@ public class Roboter extends Kreis {
         } while(!stopScan);
     }
 
+    // function to see if the robot is on the edge of the playing field
     public boolean anWand(int WandX, int WandY) {
         if(this.position.getX() == WandX || this.position.getY() == WandY) {
             return true;
@@ -96,6 +101,7 @@ public class Roboter extends Kreis {
         }
     }
 
+    // function to see if the robot is within the X Plane of a specific figure
     public boolean Zwischen_X(Figur figur) {
         if(this.maxX() < figur.maxX() && this.maxX() > figur.minX()) {
             return true;
@@ -106,6 +112,7 @@ public class Roboter extends Kreis {
         }
     }
 
+    // function to see if the robot is within the Y Plane of a specific figure
     public boolean Zwischen_Y(Figur figur) {
         if(this.maxY() < figur.maxY() && this.maxY() > figur.minY()) {
             return true;
@@ -116,11 +123,13 @@ public class Roboter extends Kreis {
         }
     }
 
+    // checks to see if the robot is too close to a vertical edge of a figure, within a specific tolerance
     public boolean ZuNah_vertikaleKante(Figur figur, double toleranz) {
         double abstand = Math.abs(-(figur.minX() - this.getPosition().getX())*(figur.maxY() - figur.minY()))/(Math.sqrt(Math.pow(figur.maxY() - figur.minY(), 2)));
         return (toleranz >= abstand) && this.Zwischen_Y(figur);
     }
 
+    // checks to see if the robot is too close to a vertical edge of a figure, within a specific tolerance
     public boolean ZuNah_horizontaleKante(Figur figur, double toleranz) {
         double abstand = Math.abs((figur.maxX() - figur.minX())*(figur.minY() - this.getPosition().getY()))/(Math.sqrt(Math.pow(figur.maxX() - figur.minX(), 2)));
         return (toleranz >= abstand) && this.Zwischen_X(figur);
