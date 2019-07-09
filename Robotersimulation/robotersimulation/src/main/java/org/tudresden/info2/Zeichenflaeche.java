@@ -17,6 +17,7 @@ public class Zeichenflaeche extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if(robot != null) {
             g.setColor(robot.getFarbe());
             g.fillOval(robot.minX(), robot.minY(), robot.getDurchmesser(), robot.getDurchmesser());

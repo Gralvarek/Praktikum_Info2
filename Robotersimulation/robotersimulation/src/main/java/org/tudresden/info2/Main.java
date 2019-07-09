@@ -12,6 +12,7 @@ public class Main {
         sf.POI_sortieren();
         scan.close();
         sf.hindernisse_umfahren();
+        System.out.println("Robot is finished...");
     
         
     }

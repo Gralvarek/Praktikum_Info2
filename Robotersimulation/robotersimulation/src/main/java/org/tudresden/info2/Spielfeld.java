@@ -129,7 +129,7 @@ public class Spielfeld {
     // robot navigation code, iterates over each point given by the punkte_eingeben() function
     public void hindernisse_umfahren() {
         for(Punkt p : this.poi) {
-            while(this.robot.getPosition().gibAbstand(p) > 50) {
+            while(this.robot.getPosition().gibAbstand(p) > 50 && Roboter.status != Roboter.Status.FINISH) {
                 Roboter.status = Roboter.Status.CONTINUE;
                 for(int index = 0; index < this.hindernisse.size(); index++) {
                     if(this.robot.ZuNah_vertikaleKante(this.hindernisse.get(index), 35.0)) {
