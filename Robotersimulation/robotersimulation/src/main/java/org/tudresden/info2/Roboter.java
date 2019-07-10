@@ -46,22 +46,22 @@ public class Roboter extends Kreis {
                     case "name":
                         this.stichwort = Stichwort.NAME;
                         break;
-                    case "creator":
+                    case "hersteller":
                         this.stichwort = Stichwort.CREATOR;
                         break;
-                    case "sex":
+                    case "geschlecht":
                         this.stichwort = Stichwort.SEX;
                         break;
-                    case "age":
+                    case "alt":
                         this.stichwort = Stichwort.AGE;
                         break;
-                    case "old":
+                    case "alter":
                         this.stichwort = Stichwort.AGE;
                         break;
                     case "start":
                         this.stichwort = Stichwort.END;
                         break;
-                    case "end":
+                    case "ende":
                         this.stichwort = Stichwort.END;
                         break;
                 }
