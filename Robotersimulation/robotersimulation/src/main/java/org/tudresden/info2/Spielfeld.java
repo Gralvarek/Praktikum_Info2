@@ -92,9 +92,9 @@ public class Spielfeld {
 
     // creates a random number of obstacles between 15 and 50
     public void hindernissliste_erzeugen() {
-        // Scanner s = new Scanner(System.in);
         try {
-            int size = zufallszahl(15, 50);
+            System.out.println("How many Hindernisse?");
+            int size = Main.scan.nextInt();
             this.hindernisse = new ArrayList<Rechteck>(size);
 
             Rechteck neuHinderniss;
